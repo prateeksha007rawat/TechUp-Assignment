@@ -1,0 +1,83 @@
+<div class="container p-5">
+  <div class="d-flex justify-content-between">
+    <h1>List of Pins</h1>
+    <div class="d-flex flex-column">
+      <button class="btn btn-primary mb-3" (click)="handlePinModal()">
+        + Add Pin
+      </button>
+      <button class="btn btn-primary mb-3" (click)="handleCustomerModal()">
+        + Add Customer
+      </button>
+    </div>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Image</th>
+        <th>Collaborators</th>
+        <th>Privacy</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pin of pins">
+        <td>{{ pin.title }}</td>
+        <td>
+          <img
+            [src]="pin.imgage || 'assets/image-temp.png'"
+            alt="{{ pin.title }}"
+            width="100"
+          />
+        </td>
+        <td>
+          <ul>
+            <li *ngFor="let collaborator of pin.collaborators">
+              {{ collaborator }}
+            </li>
+          </ul>
+        </td>
+        <td>{{ pin.privacy }}</td>
+      </tr>
+    </tbody>
+  </table>
+  @if(showPinModal){
+  <div class="modal" [class.show]="showPinModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create Pin</h5>
+          <button
+            type="button"
+            class="btn-close"
+            (click)="showPinModal = false"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <app-pin (handleSubmit)="onPinSubmit($event)"></app-pin>
+        </div>
+      </div>
+    </div>
+  </div>
+  } @if(showCustomerModal){
+  <div class="modal" [class.show]="showCustomerModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Create Customer</h5>
+          <button
+            type="button"
+            class="btn-close"
+            (click)="showCustomerModal = false"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <app-customer
+            (handleSubmit)="onCustomerSubmit($event)"
+          ></app-customer>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>
